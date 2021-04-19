@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="card card-container">
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="loginData()">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="email" id="inputEmail" class="form-control" formControlName="email" placeholder="Email address"
+                required autofocus>
+            <div *ngIf="email.invalid || email.touched">
+                <span *ngIf="email.errors?.required" class="form-error">Please enter your email address</span>
+                <span *ngIf="email.errors?.pattern" class="form-error">Please Enter Valid Email Address</span>
+            </div>
+            <input type="password" id="inputPassword" formControlName="password" class="form-control"
+                placeholder="Password" required>
+            <span *ngIf="password.invalid" class="form-error">
+                Please Enter Your Password
+            </span>
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me" formControlName="remember"> Remember me
+                </label>
+                <span *ngIf="remember.invalid" class="form-error">
+                    Please Select Rmember Me
+                </span>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" [disabled]="loginForm.invalid"
+                type="submit">Sign in</button>
+        </form><!-- /form -->
+    </div><!-- /card-container -->
+</div><!-- /container -->
