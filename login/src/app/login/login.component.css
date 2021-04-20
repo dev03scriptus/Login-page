@@ -140,3 +140,20 @@ body, html {
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+
+.psw{
+    display: flex;
+    align-items: center;
+}
+.psw input{
+    position: relative !important;
+    z-index: auto !important;
+}
+.psw i{
+    position: relative;
+}
+.psw i::before{
+    position: absolute;
+    bottom: -4px;
+    right: 9px;
+}

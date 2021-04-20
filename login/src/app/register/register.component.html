@@ -1,1 +1,68 @@
-<p>register works!</p>
+<div class="container">
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="fname">First name</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': fname.invalid, 'is-valid': fname.valid}" formControlName="fname" id="fname" placeholder="First name" required>
+            <div class="invalid-feedback" *ngIf="fname.invalid">
+              Please Enter Your First Name
+            </div>  
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="lname">Last name</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': lname.invalid, 'is-valid': lname.valid}" formControlName="lname" id="lname" placeholder="Last name" required>
+            <div class="invalid-feedback" *ngIf="lname.invalid">
+                Please Enter Your Last Name
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="uname">Username</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3">@</span>
+              </div>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': uname.invalid, 'is-valid': uname.valid}" formControlName="uname" id="uname" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+              <div class="invalid-feedback" *ngIf="uname.invalid">
+                Please Enter Username
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="city">City</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': city.invalid, 'is-valid': city.valid}" formControlName="city" id="city" placeholder="City" required>
+            <div class="invalid-feedback" *ngIf="city.invalid">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="state">State</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': state.invalid, 'is-valid': state.valid}" id="state" formControlName="state" placeholder="State" required>
+            <div class="invalid-feedback" *ngIf="state.invalid">
+              Please provide a state.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="zip">Zip</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': zip.invalid, 'is-valid': zip.valid}" id="zip" formControlName="zip" placeholder="Zip" required>
+            <div *ngIf="zip.invalid">
+                <div *ngIf="zip.errors?.required" class="invalid-feedback d-block">Please Enter Zip Code</div>
+                <div *ngIf="zip.errors?.pattern" class="invalid-feedback d-block">Please valid Zip Code</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" [ngClass]="{'is-invalid': term.invalid}" type="checkbox" formControlName="term" formControlName="term" id="terms" required>
+            <label class="form-check-label" for="terms">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback" *ngIf="term.invalid">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit form</button>
+      </form>
+</div>

@@ -22,6 +22,14 @@ export class AuthService {
 
   logOut(){
     localStorage.removeItem("loggedInUser");
-    this.myRoute.navigate(["login"]);
+    this.myRoute.navigate(["/login"]);
+  }
+
+  registerUser(registerValue: string){
+    localStorage.setItem("register", registerValue )
+  }
+
+  getRegisterUser(){
+    return localStorage.getItem("register")
   }
 }

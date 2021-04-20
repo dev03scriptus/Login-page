@@ -1,29 +1,58 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth.guard';
-import { HeaderComponent } from './header/header.component';
+import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { ServicesComponent } from './services/services.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: '/home',
     pathMatch : 'full',
-    canActivate: [AuthGuard]
   },
-  {
+  { 
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   { 
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+    loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule),
+    canActivate: [AuthGuard]
+
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+    loadChildren: () => import('./about/about.module').then(m => m.AboutModule),
+    canActivate: [AuthGuard]
+
+  },
+  {
+    path: 'services',
+    component: ServicesComponent,
+    loadChildren: () => import('./services/services.module').then(m => m.ServicesModule),
+    canActivate: [AuthGuard]
+
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 
