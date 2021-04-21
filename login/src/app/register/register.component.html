@@ -16,31 +16,30 @@
             </div>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="uname">Username</label>
+            <label for="email">email</label>
             <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupPrepend3">@</span>
-              </div>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': uname.invalid, 'is-valid': uname.valid}" formControlName="uname" id="uname" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
-              <div class="invalid-feedback" *ngIf="uname.invalid">
-                Please Enter Username
-              </div>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': email.invalid, 'is-valid': email.valid}" formControlName="email" id="email" placeholder="email" aria-describedby="inputGroupPrepend3" required>
+            </div>
+            <div *ngIf="email.invalid">
+              <div class="invalid-feedback" *ngIf="email.errors?.required">Please Enter Emial</div>
+              <div class="invalid-feedback" *ngIf="email.errors?.pattern">Please Enter Valid Email</div>
             </div>
           </div>
         </div>
         <div class="form-row">
           <div class="col-md-4 mb-3">
-            <label for="city">City</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': city.invalid, 'is-valid': city.valid}" formControlName="city" id="city" placeholder="City" required>
-            <div class="invalid-feedback" *ngIf="city.invalid">
-              Please provide a valid city.
-            </div>
+            <label for="password">password</label>
+            <input type="password" class="form-control" [ngClass]="{'is-invalid': password.invalid, 'is-valid': password.valid}" formControlName="password" id="password" placeholder="password" required>
+            <div *ngIf="password.invalid">
+              <div class="invalid-feedback" *ngIf="password.errors?.required">Please Enter Your Password</div>
+              <div class="invalid-feedback" *ngIf="password.errors?.pattern">Please enter at least 1 uppercase and  1 lowercase 1 special character 1 numeric password must be 8 character</div>
+          </div>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="state">State</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': state.invalid, 'is-valid': state.valid}" id="state" formControlName="state" placeholder="State" required>
-            <div class="invalid-feedback" *ngIf="state.invalid">
-              Please provide a state.
+            <label for="cpassword">confirm password</label>
+            <input type="password" class="form-control" [ngClass]="{'is-invalid': confPassword.invalid, 'is-valid': confPassword.valid}" id="cpassword" formControlName="confPassword" placeholder="Confirm Password" required>
+            <div class="invalid-feedback" *ngIf="confPassword.invalid">
+              <div class="invalid-feedback" *ngIf="confPassword.errors?.mustMatch">Your password is Mismatch</div>
             </div>
           </div>
           <div class="col-md-4 mb-3">

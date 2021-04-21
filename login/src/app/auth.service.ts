@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
+import {ToastrService} from 'ngx-toastr'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor( private myRoute : Router) { 
+  constructor( private myRoute : Router, private toastr : ToastrService) { 
   }
 
   sendToken(token:string){
@@ -22,7 +23,12 @@ export class AuthService {
 
   logOut(){
     localStorage.removeItem("loggedInUser");
+    this.showSuccess("You are logged out")
     this.myRoute.navigate(["/login"]);
+  }
+
+  showSuccess(message:any) {
+    this.toastr.success(message)
   }
 
   registerUser(registerValue: string){
