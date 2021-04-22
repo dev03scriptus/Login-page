@@ -6,18 +6,18 @@
             <span id="reauth-email" class="reauth-email"></span>
             <input type="email" id="inputEmail" class="form-control" formControlName="email" placeholder="Email address"
                 required autofocus>
-            <div *ngIf="email.invalid || email.touched">
-                <span *ngIf="email.errors?.required" class="form-error">Please enter your email address</span>
-                <span *ngIf="email.errors?.pattern" class="form-error">Please Enter Valid Email Address</span>
+            <div *ngIf="email?.invalid || email?.touched">
+                <span *ngIf="email?.errors?.required" class="form-error">Please enter your email address</span>
+                <span *ngIf="email?.errors?.pattern" class="form-error">Please Enter Valid Email Address</span>
             </div>
             <div class="psw">
                     <input [type]="filedTextType ? 'text' : 'password'" id="inputPassword" formControlName="password" class="form-control"
                         placeholder="Password" required>
                     <i class="fa fa-eye-slash" [ngClass]="{'fa-eye-slash': !filedTextType , 'fa-eye': filedTextType}" (click)="toggleFieldTextType()"></i>
             </div>
-            <div *ngIf="password.invalid">
-                <span class="form-error" *ngIf="password.errors?.required">Please Enter Your Password</span>
-                <span class="form-error" *ngIf="password.errors?.pattern">Please enter at least 1 uppercase and  1 lowercase 1 special character 1 numeric password must be 8 character</span>
+            <div *ngIf="password?.invalid">
+                <span class="form-error" *ngIf="password?.errors?.required">Please Enter Your Password</span>
+                <span class="form-error" *ngIf="password?.errors?.pattern">Please enter at least 1 uppercase and  1 lowercase 1 special character 1 numeric password must be 8 character</span>
             </div>
             <div id="remember" class="checkbox">
                 <label>

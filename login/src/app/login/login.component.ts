@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router} from '@angular/router';
-import {AuthService} from '../auth.service'
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service'
 import { ToastrService } from 'ngx-toastr'
+
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,15 @@ export class LoginComponent implements OnInit {
 
   filedTextType: boolean = false;
 
+  loginUser: any = [];
+  userEmail: any = [];
 
-  constructor( private myRoute : Router, private auth : AuthService, private toastr : ToastrService) { }
+  constructor(
+    private myRoute: Router,
+    private auth: AuthService,
+    private toastr: ToastrService
+  ) {
+  }
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+\=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")]),
@@ -22,26 +30,46 @@ export class LoginComponent implements OnInit {
     remember: new FormControl('')
   })
 
-  get email():any{ return this.loginForm.get("email") }
-  get password():any{ return this.loginForm.get("password")}
+  get email(): AbstractControl | null { return this.loginForm.get("email") }
+  get password(): AbstractControl | null { return this.loginForm.get("password") }
 
   ngOnInit(): void {
   }
 
-  loginData(){
-    if(this.loginForm.valid){
-      this.showSuccess();
-      this.auth.sendToken(this.loginForm.value.email);
-      this.myRoute.navigate(["home"])
+  loginData() {
+    if (this.loginForm.valid) {
+      const registerUser = localStorage.getItem("register")
+      if (registerUser) {
+        const user = JSON.parse(registerUser)
+        for (let u of user) {
+          if (u.email == this.loginForm.controls['email'].value && u.password == this.loginForm.controls['password'].value) {
+            this.myRoute.navigate(['home'])
+            this.loginUser.push(this.loginForm.value)
+            this.auth.sendToken(JSON.stringify(this.loginUser))
+            return this.showSuccess('You Are Successfully LoggedIn')
+          }
+          if(u.password !== this.loginForm.controls['password'].value && u.email !== this.loginForm.controls['email'].value){
+            return this.showError("Your Email Address And Password Is Not Valid")
+          }
+          if(u.email !== this.loginForm.controls['email'].value){
+            return this.showError("User Not Found")
+          }
+          if(u.password !== this.loginForm.controls['password'].value){
+            return this.showError("Your Password Is Incorrect")
+          }
+        }
+      }
     }
   }
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!', {
-      progressBar: true
-    });
+  showSuccess(message:string) {
+    this.toastr.success(message)
   }
-  
-  toggleFieldTextType(){
+
+  showError(message:string) {
+    this.toastr.error(message)
+  }
+
+  toggleFieldTextType() {
     this.filedTextType = !this.filedTextType
   }
 

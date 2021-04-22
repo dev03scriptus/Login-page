@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { ServicesComponent } from './services/services.component';
+import { UnauthGuard } from './unauth.guard';
 
 const routes: Routes = [
   {

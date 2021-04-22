@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { AuthService } from '../auth.service' 
 import { MustMatch } from '../_helper/must_match.validators'
 @Component({
@@ -9,9 +9,13 @@ import { MustMatch } from '../_helper/must_match.validators'
 })
 export class RegisterComponent implements OnInit {
   
-  registerArray:any = [];
+
+  constructor( 
+    private auth : AuthService, 
+    private f : FormBuilder,
+    ) { }
+
   
-  constructor( private auth : AuthService, private f : FormBuilder ) { }
   registerForm = new FormGroup({
     fname : new FormControl('', [Validators.required]),
     lname: new FormControl ('', [Validators.required]),
@@ -20,17 +24,29 @@ export class RegisterComponent implements OnInit {
     confPassword: new FormControl('',[Validators.required]),
     zip: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{6}")]),
     term : new FormControl('', [Validators.required])
-  },{
-
   });
 
-  get fname():any{ return this.registerForm.get("fname") }
-  get lname():any{ return this.registerForm.get("lname") }
-  get email():any{ return this.registerForm.get("email") }
-  get password():any{ return this.registerForm.get("password")}
-  get confPassword():any{ return this.registerForm.get("confPassword")}
-  get zip():any{ return this.registerForm.get("zip") }
-  get term():any{ return this.registerForm.get("term") }  
+  get fname(): AbstractControl | null { 
+    return this.registerForm.get("fname");
+  }
+  get lname():AbstractControl | null{ 
+    return this.registerForm.get("lname") 
+  }
+  get email():AbstractControl | null{ 
+    return this.registerForm.get("email") 
+  }
+  get password():AbstractControl | null{ 
+    return this.registerForm.get("password")
+  }
+  get confPassword():AbstractControl | null{ 
+    return this.registerForm.get("confPassword")
+  }
+  get zip():AbstractControl | null{
+     return this.registerForm.get("zip") 
+    }
+  get term():AbstractControl | null{ 
+    return this.registerForm.get("term") 
+  }  
 
 
   ngOnInit(): void {
@@ -38,9 +54,15 @@ export class RegisterComponent implements OnInit {
 
   register(){
     if(this.registerForm.valid){
-      this.registerArray.push(this.registerForm.value)        
-      const register = this.auth.registerUser( JSON.stringify(this.registerArray))
-      console.log(register);
+      const localStorageData = localStorage.getItem('register')
+      if(!localStorageData){
+        localStorage.setItem('register',JSON.stringify([this.registerForm.value]))
+      }
+      else{
+        const parseLocalStorageData = JSON.parse(localStorageData)
+        parseLocalStorageData.push(this.registerForm.value)
+        localStorage.setItem('register',JSON.stringify(parseLocalStorageData))
+      }
     }
   }
 }
