@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class LoginComponent implements OnInit {
 
+
+
   filedTextType: boolean = false;
 
   loginUser: any = [];
@@ -41,26 +43,42 @@ export class LoginComponent implements OnInit {
       const registerUser = localStorage.getItem("register")
       if (registerUser) {
         const user = JSON.parse(registerUser)
-        for (let u of user) {
-          if (u.email == this.loginForm.controls['email'].value && u.password == this.loginForm.controls['password'].value) {
-            this.myRoute.navigate(['home'])
-            this.loginUser.push(this.loginForm.value)
-            this.auth.sendToken(JSON.stringify(this.loginUser))
-            return this.showSuccess('You Are Successfully LoggedIn')
-          }
-          if(u.password !== this.loginForm.controls['password'].value && u.email !== this.loginForm.controls['email'].value){
-            return this.showError("Your Email Address And Password Is Not Valid")
-          }
-          if(u.email !== this.loginForm.controls['email'].value){
-            return this.showError("User Not Found")
-          }
-          if(u.password !== this.loginForm.controls['password'].value){
-            return this.showError("Your Password Is Incorrect")
-          }
+        const emailIndex = user.findIndex((item:any) => item.email == this.loginForm.controls['email'].value && item.password == this.loginForm.controls['password'].value)
+        console.log("emailIndex",emailIndex);
+        
+        if(emailIndex !== -1){
+          this.showSuccess("sucessfully Loggedin")
+          this.auth.sendToken(this.loginForm.controls['email'].value)
+          this.myRoute.navigate(['home'])
         }
-      }
+        const emailValidation = user.findIndex((item:any) => item.email == this.loginForm.controls['email'].value)
+        console.log("emailValidation",emailValidation);
+        if(emailValidation == -1){
+          this.showError("email is Invalid")
+        }
+        const passwordValidation = user.findIndex((item:any) => item.password == this.loginForm.controls['password'].value)
+        console.log("passwordValidation",passwordValidation);
+        
+        if(passwordValidation == -1){
+           this.showError("password Invalid")
+        }
+      } 
     }
   }
+
+  canExit(): boolean{
+    if(this.auth.isLoggedIn()){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+
+
+
+
   showSuccess(message:string) {
     this.toastr.success(message)
   }

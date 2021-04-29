@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
 import {ToastrService} from 'ngx-toastr'
+import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor( private myRoute : Router, private toastr : ToastrService) { 
+  constructor( private myRoute : Router, private toastr : ToastrService, private http: HttpClient) { 
   }
 
   sendToken(token:string){
@@ -37,5 +38,9 @@ export class AuthService {
 
   getRegisterUser(){
     return localStorage.getItem("register")
+  }
+
+  getUserData(){
+    return this.http.get('https://jsonplaceholder.typicode.com/users')
   }
 }

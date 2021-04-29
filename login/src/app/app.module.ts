@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr'
 import {UnauthGuard} from './unauth.guard'
+import { HttpClientModule } from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import {UnauthGuard} from './unauth.guard'
     NgbModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ToastrModule.forRoot(),
   ],
   providers: [],

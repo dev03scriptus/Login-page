@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
         return false;
       }
     }
-
-    showError(message:any){
+    
+    showError(message:any){ 
       this.toastr.error(message)
     }
 }

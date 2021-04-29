@@ -64,5 +64,6 @@ export class RegisterComponent implements OnInit {
         localStorage.setItem('register',JSON.stringify(parseLocalStorageData))
       }
     }
+    this.registerForm.reset()
   }
 }

@@ -13,12 +13,13 @@ import { UnauthGuard } from './unauth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/login',
     pathMatch : 'full',
   },
   { 
     path: 'login',
     component: LoginComponent,
+    canActivate: [UnauthGuard]
   },
   { 
     path: 'register',
