@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators,NgModel } from '@angular/forms';
+import { FormControl, Validators, NgModel } from '@angular/forms';
 import { AuthService } from '../auth.service'
 @Component({
   selector: 'app-home',
@@ -35,8 +35,7 @@ export class HomeComponent implements OnInit {
 
   deleteUserId: any[] = []
   removeData: any;
-  checkUncheckField : FormControl = new FormControl('', Validators.required)
-  disabledButton : boolean = false;
+  disabledButton: boolean = false;
   constructor(
     private auth: AuthService,
   ) { }
@@ -50,20 +49,26 @@ export class HomeComponent implements OnInit {
     this.auth.getUserData().subscribe(result => {
       this.userData = result
       for (let data of this.userData) {
-        const addData = { ...data, checked: false }
+        data = { ...data, checked: false }
       }
+      this.disabledButton = true
     })
   }
-
+  
   checkUncheck(id: Number, value: boolean) {
     const index = this.userData.findIndex((item: any) => item.id == id)
     this.userData[index].checked = value
+    const checkedAny = this.userData.findIndex((item: any) => item.checked === true)
+    this.disabledButton = checkedAny > -1 ? false : true
   }
 
-  deleteData(event:any) {
+
+
+  deleteData(event: any) {
     for (let item of this.userData) {
       if (item.checked == true) {
-        const filterData = this.userData.filter((data:any ) => data.id !== item.id)
+        this.deleteUserId.push(item.id)
+        const filterData = this.userData.filter((data: any) => data.id !== item.id)
         this.userData = filterData
       }
     }

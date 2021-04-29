@@ -2,7 +2,7 @@
     <thead class="thead-dark">
       <tr>
          <th class="text-center">
-            <button class="btn btn-primary" (click)="deleteData($event)">Delete</button>
+            <button class="btn btn-primary" [disabled]="disabledButton" (click)="deleteData($event)">Delete</button>
          </th>
         <th scope="col" *ngFor="let item of tableHead">{{item.field}}</th>
       </tr>
