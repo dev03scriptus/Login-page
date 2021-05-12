@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, NgModel } from '@angular/forms';
 import { AuthService } from '../auth.service'
+import { HeaderComponent } from '../header/header.component'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,6 +10,7 @@ import { AuthService } from '../auth.service'
 export class HomeComponent implements OnInit {
 
   deleteUser: Boolean = false
+  searchData : any[] = []
   tableHead = [
     {
       field: 'Name'
@@ -33,9 +35,11 @@ export class HomeComponent implements OnInit {
     }
   ]
 
+  searchValue : any
   deleteUserId: any[] = []
   removeData: any;
   disabledButton: boolean = false;
+
   constructor(
     private auth: AuthService,
   ) { }
@@ -49,8 +53,9 @@ export class HomeComponent implements OnInit {
     this.auth.getUserData().subscribe(result => {
       this.userData = result
       for (let data of this.userData) {
-        data = { ...data, checked: false }
-      }
+        data = { ...data, checked: false}
+        console.log(data);
+      }      
       this.disabledButton = true
     })
   }
@@ -61,9 +66,7 @@ export class HomeComponent implements OnInit {
     const checkedAny = this.userData.findIndex((item: any) => item.checked === true)
     this.disabledButton = checkedAny > -1 ? false : true
   }
-
-
-
+  
   deleteData(event: any) {
     for (let item of this.userData) {
       if (item.checked == true) {
@@ -72,5 +75,14 @@ export class HomeComponent implements OnInit {
         this.userData = filterData
       }
     }
+  }
+
+  addItem(value: any){    
+      this.searchValue = this.userData.filter((item :any) => item.name.includes(value))
+      console.log(this.searchValue);
+      
+      if(this.userData.name !== value){
+        console.log("no data found");
+      }
   }
 }

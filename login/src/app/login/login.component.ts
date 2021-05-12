@@ -75,10 +75,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
-
-
-
   showSuccess(message:string) {
     this.toastr.success(message)
   }

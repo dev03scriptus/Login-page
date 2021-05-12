@@ -1,18 +1,19 @@
+<div class="search-data mt-3">
+  <app-search ngDefaultControl [(ngModel)]="searchValue" (newItemEvent)="addItem($event)"></app-search>
+</div>
 <table class="table mt-3">
     <thead class="thead-dark">
       <tr>
-         <th class="text-center">
+         <th class="text-center"> 
             <button class="btn btn-primary" [disabled]="disabledButton" (click)="deleteData($event)">Delete</button>
-         </th>
+         </th>  
         <th scope="col" *ngFor="let item of tableHead">{{item.field}}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of userData">
+      <tr *ngFor="let data of userData | filter:searchValue">
         <th>
-            <form>
-                <input type="checkbox" #checkId class="form-control" [checked]="deleteUser" (change)="checkUncheck(data.id, checkId.checked)">
-            </form>
+            <form><input type="checkbox" #checkId class="form-control" [checked]="deleteUser" (change)="checkUncheck(data.id, checkId.checked)"></form>
         </th>
         <th>{{data.name}}</th>
         <td>{{data.username}}</td>

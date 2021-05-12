@@ -1,0 +1,4 @@
+<form class="form-inline my-2 my-lg-0 justify-content-end">
+    <input class="form-control mr-sm-2" name="search" #newItem [(ngModel)]="newItem.value" (ngModelChange)="searchValue(newItem.value)" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchValue(newItem.value)" type="submit">Search</button>
+  </form>
